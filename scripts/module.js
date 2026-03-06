@@ -5,6 +5,8 @@ import { getPdf, getSheetType, getSheetTypeFromActor } from "./sheet-export-api.
 import { detectImageType } from './lib/image-type-detector.js';
 import { asFoundryRoute } from './pdf-utils.js';
 
+const MODULE_ID = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
+
 Hooks.once('ready', async function () {
 	console.log("---------------GIOPPO--------------")
 	console.log(Hooks)
@@ -167,12 +169,12 @@ class SheetExportconfig extends FormApplication {
 	}
 
 	/** The module's ID */
-	static ID = "sheet-export";
+	static ID = MODULE_ID;
 
 	/** @override */
 	static get defaultOptions() {
 		return mergeObject(super.defaultOptions, {
-			template: "modules/sheet-export/templates/module.hbs",
+			template: `modules/${MODULE_ID}/templates/module.hbs`,
 			id: "sheet-export-form",
 			height: (window.innerHeight * 7) / 8,
 			width: Math.max(window.innerWidth / 3, 600),
@@ -372,7 +374,7 @@ class SheetExportconfig extends FormApplication {
 		let mappingVersion = "RU";
 		let mappingRelease = "latest";
 
-		const mappingPath = `/modules/sheet-export/mappings/${game.system.id}/${mappingVersion}/${mappingRelease}/${this.sheetType}.js`;
+		const mappingPath = `/modules/${MODULE_ID}/mappings/${game.system.id}/${mappingVersion}/${mappingRelease}/${this.sheetType}.js`;
 		const { default: MappingClass } = await import(foundry.utils.getRoute(mappingPath));
 		var mappingClass = null;
 		try {
@@ -426,8 +428,8 @@ class SheetExportconfig extends FormApplication {
 			rowPdfTitle.prepend(pdfTitle);
 
 			inputForm.appendChild(rowPdfTitle);
-			const fontUtf = game.settings.get("sheet-export", "defaultFontFamily");
-			const fonUtfUrl = `/modules/sheet-export/mappings/${fontUtf}`;
+			const fontUtf = game.settings.get(SheetExportconfig.ID, "defaultFontFamily");
+			const fonUtfUrl = `/modules/${MODULE_ID}/mappings/${fontUtf}`;
 
 			const fontUtfUrl = foundry.utils.getRoute(fonUtfUrl);
 			const fontUtfBuffer = await fetch(fontUtfUrl).then(res => res.arrayBuffer());

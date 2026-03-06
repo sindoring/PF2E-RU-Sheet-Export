@@ -2,6 +2,8 @@ import { PDFDocument } from './lib/pdf-lib.esm.js';
 import { systemMapping, systemMappingSheet } from './systemMapping.js';
 import { asFoundryRoute } from './pdf-utils.js';
 
+const MODULE_ID = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
+
 
 async function getMapping(mappingChoice, mappingRelease, mappingElement) {
 	console.log("get mapping");
@@ -19,7 +21,7 @@ async function getMapping(mappingChoice, mappingRelease, mappingElement) {
 	}
 */
 	//let mappingClass;
-	const { default: mappingClass } = await import(getRoute(`/modules/sheet-export/mappings/${game.system.id}/${mappingChoice}/${mappingRelease}/${mappingElement}.js`));
+	const { default: mappingClass } = await import(getRoute(`/modules/${MODULE_ID}/mappings/${game.system.id}/${mappingChoice}/${mappingRelease}/${mappingElement}.js`));
 	console.log(mappingClass);
 	var mc = new mappingClass(actor, this.sheetType, this.sheet);
 	console.log(mc);
@@ -37,7 +39,7 @@ async function getPdf(pdfUrl, buffer = null) {
 			candidates.push(pdfUrl);
 			// External URLs can fail in-browser due to CORS; keep a local fallback for PF2E RU sheet.
 			if (pdfUrl.includes("pf2.ru/media/pc_sheets/RM_CharacterSheet_Fillable.pdf")) {
-				candidates.push("/modules/sheet-export/mappings/pf2e/RU/latest/RM_CharacterSheet_Fillable.pdf");
+				candidates.push(`/modules/${MODULE_ID}/mappings/pf2e/RU/latest/RM_CharacterSheet_Fillable.pdf`);
 			}
 		} else {
 			candidates.push(pdfUrl);
@@ -59,7 +61,7 @@ async function getPdf(pdfUrl, buffer = null) {
 		}
 
 		if (!pdfBytes) {
-			const message = "Cannot load PDF template. Download RM_CharacterSheet_Fillable.pdf and place it in modules/sheet-export/mappings/pf2e/RU/latest/.";
+			const message = `Cannot load PDF template. Download RM_CharacterSheet_Fillable.pdf and place it in modules/${MODULE_ID}/mappings/pf2e/RU/latest/.`;
 			console.error(message, lastError);
 			throw new Error(message);
 		}
@@ -71,7 +73,7 @@ async function getPdf(pdfUrl, buffer = null) {
 	const pdfSignature = [0x25, 0x50, 0x44, 0x46, 0x2D]; // %PDF-
 	const isPdf = pdfSignature.every((value, index) => bytesView[index] === value);
 	if (!isPdf) {
-		throw new Error("Template file is not a valid PDF. Download RM_CharacterSheet_Fillable.pdf manually and place it in modules/sheet-export/mappings/pf2e/RU/latest/.");
+		throw new Error(`Template file is not a valid PDF. Download RM_CharacterSheet_Fillable.pdf manually and place it in modules/${MODULE_ID}/mappings/pf2e/RU/latest/.`);
 	}
 
 	const pdfDoc = await PDFDocument.load(pdfBytes);
@@ -92,7 +94,7 @@ function getSheetTypeFromActor(actor, mappingChoice = "", mappingRelease = "") {
 	}
 
 	console.log("there is a mapping for the actor type");
-	console.log(`/modules/sheet-export/mappings/${game.system.id}/${mappingChoice}/${mappingRelease}/${mappedType}.js`);
+	console.log(`/modules/${MODULE_ID}/mappings/${game.system.id}/${mappingChoice}/${mappingRelease}/${mappedType}.js`);
 	return mappedType;
 }
 

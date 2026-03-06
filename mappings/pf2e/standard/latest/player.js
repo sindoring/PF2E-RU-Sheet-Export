@@ -1,6 +1,8 @@
 
 import baseMapping from "../../../../scripts/baseMapping.js";
 
+const MODULE_ID = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
+
 class MappingClass extends baseMapping {
 
 
@@ -30,7 +32,7 @@ class MappingClass extends baseMapping {
 
         // Set the PDF files to use - MIND that the order of the files is important!
         this.pdfFiles.push({
-            pdfUrl: '/modules/sheet-export/mappings/pf2e/standard/latest/pf2e-remastered.pdf',
+            pdfUrl: `/modules/${MODULE_ID}/mappings/pf2e/standard/latest/pf2e-remastered.pdf`,
             nameDownload: `${this.actor.name ?? "character"}.pdf`,
             name: "pf2e-remastered.pdf",
         });

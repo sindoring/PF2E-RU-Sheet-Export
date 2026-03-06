@@ -1,5 +1,7 @@
 import StandardPf2eMapping from "../../standard/latest/player.js";
 
+const MODULE_ID = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
+
 const ABILITY_TO_RU_FIELD = {
     str: "att_str",
     dex: "att_dex",
@@ -144,7 +146,7 @@ class MappingClass extends StandardPf2eMapping {
 
         this.pdfFiles = [
             {
-                pdfUrl: "/modules/sheet-export/mappings/pf2e/RU/latest/RM_CharacterSheet_Fillable.pdf",
+                pdfUrl: `/modules/${MODULE_ID}/mappings/pf2e/RU/latest/RM_CharacterSheet_Fillable.pdf`,
                 nameDownload: `${this.actor.name ?? "character"}.pdf`,
                 name: "RM_CharacterSheet_Fillable.pdf",
             },

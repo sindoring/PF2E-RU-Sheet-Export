@@ -1,13 +1,14 @@
 import { PDFDocument } from '../lib/pdf-lib.esm.js';
 import fontkit from '../lib/fontkit.es.js';
 
+const MODULE_ID = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
 
 export class CustomMapping extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "sheet-export-customMapping",
             title: 'Custom Mappings',
-            template: "./modules/sheet-export/templates/customMapping.hbs",
+            template: `./modules/${MODULE_ID}/templates/customMapping.hbs`,
             width: 650,
             closeOnSubmit: true,
             resizable: true,
@@ -73,7 +74,7 @@ export class CustomMapping extends FormApplication {
     async saveFile(file) {
         console.log("saveJsBuffer");
         console.log(file);
-        let response = await FilePicker.upload("data", `modules/sheet-export/mappings/${game.system.id}/custom/latest`, file, {});
+        let response = await FilePicker.upload("data", `modules/${MODULE_ID}/mappings/${game.system.id}/custom/latest`, file, {});
         console.log(response);
         const reader = new FileReader();
 //        reader.onload = ev => this.onFileUpload(ev.target.result);

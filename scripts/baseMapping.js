@@ -2,6 +2,8 @@ import { detectImageType } from './lib/image-type-detector.js';
 import { rgb } from './lib/pdf-lib.esm.js';
 import { drawCenteredParagraph, drawLeftAlignedParagraph, drawCenteredText, drawTopLeftAlignedParagraph } from './pdf-utils.js'
 
+const MODULE_ID = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
+
 class baseMapping {
 
     constructor(actor, sheetType, sheet) {
@@ -40,7 +42,7 @@ class baseMapping {
         this.embeddedImages = new Map();
         this.embeddedFonts = new Map(); // key: fontName, value: { font, path }
 
-        this.omitChangeable = game.settings.get("sheet-export", "omitChangeable");
+        this.omitChangeable = game.settings.get(MODULE_ID, "omitChangeable");
 
         // this.createMappings();
     }
@@ -232,7 +234,7 @@ class baseMapping {
             columns: 2,
             fonts: {
                 // fontName: pathToFont
-                Default: "/modules/sheet-export/mappings/NotoSans-Regular.ttf"
+                Default: `/modules/${MODULE_ID}/mappings/NotoSans-Regular.ttf`
             },
             images: {
                 // Map of key -> { path, width, height }

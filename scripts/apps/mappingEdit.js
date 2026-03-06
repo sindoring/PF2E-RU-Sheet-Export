@@ -1,11 +1,12 @@
 
 import { getMapping, getPdf } from "../sheet-export-api.js";
 
+const MODULE_ID = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
 
 export class MappingEdit extends FormApplication {
     disabledPc = false;
     disabledNpc = false;
-    static ID = "sheet-export";
+    static ID = MODULE_ID;
     saveFile = "player";
     workingMapping = {};
     constructor(object, options = {}) {
@@ -35,7 +36,7 @@ export class MappingEdit extends FormApplication {
         console.log("||||||||||||MappingEdit||||||||||||||");
         var disabledPc = false;
         var disabledNpc = false;
-        await FilePicker.browse("data", `modules/sheet-export/mappings/${game.system.id}/standard/latest`, { extensions: [".json"] }).then(results => {
+        await FilePicker.browse("data", `modules/${MODULE_ID}/mappings/${game.system.id}/standard/latest`, { extensions: [".json"] }).then(results => {
             // Add the default option first
             console.log(results);
             console.log(results.files.filter(f => f.split("/").at(-1).replace(".json", "")));
@@ -64,7 +65,7 @@ export class MappingEdit extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "sheet-export-mappingedit",
             title: 'Edit Mappings',
-            template: "./modules/sheet-export/templates/mappingEdit.hbs",
+            template: `./modules/${MODULE_ID}/templates/mappingEdit.hbs`,
             width: 600,
             closeOnSubmit: true,
             resizable: true,
@@ -134,7 +135,7 @@ class MappingClass extends baseMapping {
 
         // Set the PDF files to use - MIND that the order of the files is important!
         this.pdfFiles.push({
-            pdfUrl: '/modules/sheet-export/mappings/${game.system.id}/YOUR_PDF_FILENAME.pdf',
+            pdfUrl: '/modules/${MODULE_ID}/mappings/${game.system.id}/YOUR_PDF_FILENAME.pdf',
             nameDownload: \`\${this.actor.name ?? "character"}.pdf\`,
             name: "YOUR_PDF_FILENAME.pdf",
         });
@@ -176,7 +177,7 @@ export default MappingClass;
             "fonts": [
                 {
                     "id": "UbuntuCondensed-Regular",
-                    "path": "/modules/sheet-export/mappings/NotoSans-Regular.ttf"
+                    "path": "/modules/${MODULE_ID}/mappings/NotoSans-Regular.ttf"
                 }
             ],
             "globalContent": [
@@ -238,7 +239,7 @@ export default MappingClass;
         const text = JSON.stringify(this.workingMapping, null, 2);
         const blob = new Blob([text], { type: "text/plain" });
         var newFile = new File([blob], this.saveFile + '.json', { type: "application/json" });
-        let response = await FilePicker.upload("data", `modules/sheet-export/mappings/${game.system.id}/custom/latest`, newFile, {});
+        let response = await FilePicker.upload("data", `modules/${MODULE_ID}/mappings/${game.system.id}/custom/latest`, newFile, {});
         console.log(response);
         /*
         const reader = new FileReader();

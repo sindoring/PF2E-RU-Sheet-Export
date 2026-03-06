@@ -1,12 +1,13 @@
 ﻿export const registerSettings = function () {
-	const modulename = "sheet-export";
+	const modulename = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
+	const i18nNamespace = "sheet-export";
 	const fixedMappingOption = "RU-latest";
 
 	console.log("----------- SHEET-EXPORT -----------");
 
 	game.settings.register(modulename, "mappingOption", {
-		name: game.i18n.localize(`${modulename}.settings.mappingOption.Name`),
-		hint: game.i18n.localize(`${modulename}.settings.mappingOption.Hint`),
+		name: game.i18n.localize(`${i18nNamespace}.settings.mappingOption.Name`),
+		hint: game.i18n.localize(`${i18nNamespace}.settings.mappingOption.Hint`),
 		scope: "world",
 		config: false,
 		default: fixedMappingOption,
@@ -58,7 +59,7 @@
 		config: true,
 		type: Boolean,
 		default: false,
-		name: game.i18n.localize(`${modulename}.settings.omitChangeable.Name`),
-		hint: game.i18n.localize(`${modulename}.settings.omitChangeable.Hint`),
+		name: game.i18n.localize(`${i18nNamespace}.settings.omitChangeable.Name`),
+		hint: game.i18n.localize(`${i18nNamespace}.settings.omitChangeable.Hint`),
 	});
 };
