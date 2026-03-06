@@ -1,0 +1,102 @@
+#sheet-export-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#sheet-export-header {
+    display: flex;
+}
+
+#sheet-export-upload {
+    flex: 2;
+    margin: auto;
+}
+
+#sheet-export-download {
+    flex: 1;
+    font-size: 12px;
+}
+
+#sheet-export-final {
+    display: none;
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+    right: 20px;
+    bottom: 20px;
+    border: solid;
+    background-image: url(/ui/parchment.jpg);
+}
+
+/* Fix icon margin */
+#sheet-export-final .fas {
+    margin: 0;
+}
+
+#sheet-export-mappingedit-save {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    border-radius: 100px;
+    right: 20px;
+    bottom: 20px;
+    border: solid;
+    background-image: url(/ui/parchment.jpg);
+}
+
+/* Fix icon margin */
+#sheet-export-mappingedit-save .fas {
+    margin: 0;
+}
+
+
+#fieldList {
+    flex: 1;
+    list-style: none;
+    padding: 0;
+}
+
+#fieldList>li:first-child {
+    margin-top: 0;
+}
+
+#fieldList>li:last-child {
+    margin-bottom: 0;
+}
+
+#fieldList>li {
+    margin: 10px 0;
+    display: flex;
+}
+
+#fieldList>li>label {
+    flex: 1;
+    margin: auto;
+}
+
+#fieldList>li>textarea {
+    resize: vertical;
+    flex: 2;
+    min-height: 2em;
+    height: 2em;
+}
+
+#fieldList>li>input {
+    resize: vertical;
+    flex: 2;
+    min-height: 2em;
+    height: 2em;
+    text-align: right;
+}
+
+.sheet-export-btn {
+	margin: auto;
+	border: 1px solid #666;
+	border-radius: 0.25em;
+	box-shadow: inset 0 0 0.1em #fff, 0.2em 0.2em 0.2em rgba( 0, 0, 0, 0.3 );
+	padding: 0 0.62em;
+}
+label.pdf-title{
+    color: darkred;
+}

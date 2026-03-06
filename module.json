@@ -1,0 +1,58 @@
+{
+  "id": "sheet-export-pf2e-ru",
+  "title": "PF2E RU Sheet Export",
+  "description": "Export Pathfinder 2e character sheets to Russian PDF template",
+  "version": "#{VERSION}#",
+  "library": "false",
+  "compatibility": {
+    "minimum": "11",
+    "verified": "13",
+    "maximum": "13"
+  },
+  "authors": [
+    {
+      "name": "Ilyas Abushaev",
+      "flags": {}
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system"
+      }
+    ],
+    "requires": []
+  },
+  "esmodules": [
+    "scripts/module.js"
+  ],
+  "scripts": [
+    "scripts/lib/runtime.js",
+    "scripts/lib/FileSaver.min.js"
+  ],
+  "styles": [
+    "styles/module.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json",
+      "flags": {}
+    }
+  ],
+  "url": "https://github.com/sindoring/PF2E-RU-Sheet-Export",
+  "manifest": "https://raw.githubusercontent.com/sindoring/PF2E-RU-Sheet-Export/master/module.json",
+  "download": "https://github.com/sindoring/PF2E-RU-Sheet-Export/archive/refs/tags/%D1%80%D0%B5%D0%BB%D0%B8%D0%B7.zip",
+  "license": "LICENSE",
+  "readme": "README.md",
+  "media": [
+    {
+      "type": "icon",
+      "url": "https://avatars2.githubusercontent.com/u/71292812?s=400&u=ccdb4eeb7abf551ca8f314e5a9bfd0479a4d3d41&v=4",
+      "loop": false,
+      "flags": {}
+    }
+  ]
+}
