@@ -1,4 +1,4 @@
-﻿# PF2E RU Sheet Export
+# PF2E-RU-Sheet-Export
 
 Модуль для Foundry VTT, который экспортирует лист персонажа Pathfinder 2e в русскоязычный PDF-шаблон.
 
