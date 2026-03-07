@@ -6,6 +6,24 @@ import { detectImageType } from './lib/image-type-detector.js';
 import { asFoundryRoute } from './pdf-utils.js';
 
 const MODULE_ID = (import.meta.url.match(/\/modules\/([^/]+)\//)?.[1]) ?? "sheet-export-pf2e-ru";
+const FALLBACK_FORM_TEMPLATE = `
+<form id="sheet-export-form">
+    <header id="sheet-export-header">
+        <label for="sheet-export-upload" class="sheet-export-btn">{{ localize 'sheet-export.sheet.override' }}</label>
+        <input id="sheet-export-upload" type="file" name="upload" accept="application/pdf" style="visibility:hidden;" />
+        <input id="sheet-export-apply" type="button" name="apply" value="Apply" />
+        {{#if download.show}}
+        <button id="sheet-export-download" title="{{download.title}}" onclick="window.open('{{download.url}}', '_blank')">
+            <i class="fas fa-download"></i> {{download.label}}
+        </button>
+        {{/if}}
+    </header>
+    <ul id="fieldList"></ul>
+    <button id="sheet-export-final">
+        <i class="fas fa-print"></i>
+    </button>
+</form>
+`;
 
 Hooks.once('ready', async function () {
 	console.log("---------------GIOPPO--------------")
@@ -216,6 +234,22 @@ class SheetExportconfig extends FormApplication {
 				url: game.i18n.localize(`sheet-export.download.${system}.url`),
 			},
 		};
+	}
+
+	/** @override */
+	async _renderInner(data) {
+		const templatePath = this.options.template;
+		if (templatePath) {
+			try {
+				const rendered = await renderTemplate(templatePath, data);
+				return $(rendered);
+			} catch (error) {
+				console.error(`Cannot render template "${templatePath}" for module "${MODULE_ID}". Using inline fallback template.`, error);
+			}
+		}
+
+		const compiled = Handlebars.compile(FALLBACK_FORM_TEMPLATE);
+		return $(compiled(data));
 	}
 
 	/** Get values and download PDF */
